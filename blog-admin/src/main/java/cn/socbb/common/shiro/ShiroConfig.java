@@ -76,8 +76,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/fonts/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
-        // druid 数据源监控页面不拦截
-        filterChainDefinitionMap.put("/druid/**", "anon");
+
         // 用户注册页面不拦截
         filterChainDefinitionMap.put("/user/regist", "anon");
         // 获取验证码不拦截

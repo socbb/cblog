@@ -22,9 +22,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(String id) {
-//        return userDao.selectByPrimaryKey(new User(id));
-        return null;
+        return userDao.selectByPrimaryKey(id);
     }
+
+    @Override
+    public User findByUsername(String username) {
+        return userDao.selectOne(new User(username));
+    }
+
 
     @Override
     @Transactional

@@ -41,6 +41,13 @@ public class User implements Serializable {
 
     private Integer loginCount;
 
+    public User() {
+    }
+
+    public User(String username) {
+        this.username = username;
+    }
+
     public User(Long id) {
         this.id = id;
     }

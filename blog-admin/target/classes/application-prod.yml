@@ -54,3 +54,5 @@ spring:
 logging:
   path: /opt/website/blog-web
 # 自定义配置
+upload:
+  path: /opt/upload

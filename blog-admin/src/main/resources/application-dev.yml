@@ -56,3 +56,5 @@ logging:
   level:
     root: debug
 # 自定义配置
+upload:
+  path: upload
