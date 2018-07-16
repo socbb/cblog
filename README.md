@@ -16,7 +16,7 @@ blog-admin|后台 模块
 - Spring boot
 - Apache shiro
 - Mybatis
-- Papehelper
+- Pagehelper
 - 通用Mapper
 - Mysql
 - Redis
