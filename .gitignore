@@ -22,8 +22,7 @@
 hs_err_pid*
 
 /.idea/
-/target/
-/*/target/
+**/target/
 /log/
 /logs/
 *.iml
