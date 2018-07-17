@@ -10,7 +10,7 @@
 --|--
 blog-core | 核心业务模块
 blog-web | 前台模块
-blog-admin|后台 模块
+blog-admin|后台模块
 
 #### 技术栈
 - Spring boot
