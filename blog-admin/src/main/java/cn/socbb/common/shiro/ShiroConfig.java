@@ -14,7 +14,9 @@ import org.crazycake.shiro.RedisManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -29,15 +31,8 @@ import java.util.LinkedHashMap;
 @Configuration
 public class ShiroConfig {
 
-    @Value("${spring.redis.host}")
-    private String host;
-
-    @Value("${spring.redis.port}")
-    private int port;
-
-    @Value("${spring.redis.timeout}")
-    private int timeout;
-
+    @Autowired
+    private RedisProperties redisProperties;
     /**
      * shiro 中配置 redis 缓存
      * @return RedisManager
@@ -45,10 +40,11 @@ public class ShiroConfig {
     private RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
         // 缓存时间，单位为秒
-        redisManager.setExpire(1800);
-        redisManager.setHost(host);
-        redisManager.setPort(port);
-        redisManager.setTimeout(timeout);
+        redisManager.setHost(redisProperties.getHost());
+        redisManager.setPort(redisProperties.getPort());
+        redisManager.setDatabase(redisProperties.getDatabase());
+        redisManager.setTimeout(redisProperties.getTimeout().getNano()*1000);
+        redisManager.setPassword(redisProperties.getPassword());
         return redisManager;
     }
 
@@ -65,17 +61,13 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 登录的 url
         shiroFilterFactoryBean.setLoginUrl("/login");
-        // 登录成功后跳转的 url
-        shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权 url
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
         // 定义 filterChain，静态资源不拦截
-        filterChainDefinitionMap.put("/css/**", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/fonts/**", "anon");
-        filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/static/**", "anon");
+        filterChainDefinitionMap.put("/inspinia/**", "anon");
 
         // 用户注册页面不拦截
         filterChainDefinitionMap.put("/user/regist", "anon");

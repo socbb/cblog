@@ -2,6 +2,7 @@
 package cn.socbb.common.shiro;
 
 import cn.socbb.common.constant.CommonConst;
+import cn.socbb.common.constant.SessionConst;
 import cn.socbb.core.bean.system.User;
 import cn.socbb.core.service.system.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -77,7 +78,7 @@ public class RetryLimitCredentialsMatcher extends CredentialsMatcher {
         }
         // 当验证都通过后，把用户信息放在session里
         // 注：User必须实现序列化
-        SecurityUtils.getSubject().getSession().setAttribute(CommonConst.USER_SESSION_KEY, user);
+        SecurityUtils.getSubject().getSession().setAttribute(SessionConst.USER_SESSION_KEY, user);
         return true;
     }
 }

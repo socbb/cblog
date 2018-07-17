@@ -1,9 +1,7 @@
 package cn.socbb.common.utils;
 
-import cn.socbb.common.constant.TableIndexConst;
 import org.apache.commons.collections.CollectionUtils;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
