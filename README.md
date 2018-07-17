@@ -1,11 +1,26 @@
 # cblog
 
 #### 项目介绍
-Spring boot + Mybatis 构建最简洁的系统
+使用 Spring boot + Mybatis 构建最简洁的博客系统
 
 #### 软件架构
 软件架构说明
 
+模块| 描述
+--|--
+blog-core | 核心业务模块
+blog-web | 前台模块
+blog-admin|后台模块
+
+#### 技术栈
+- Spring boot
+- Apache shiro
+- Mybatis
+- Pagehelper
+- 通用Mapper
+- Mysql
+- Redis
+- Fremarker
 
 #### 安装教程
 
