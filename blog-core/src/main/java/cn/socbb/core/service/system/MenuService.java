@@ -11,4 +11,5 @@ public interface MenuService {
 
     public List<Menu> findByUserId(Long userId);
 
+    List<Menu> findUrlAndPerms();
 }

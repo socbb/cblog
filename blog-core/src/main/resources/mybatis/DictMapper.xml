@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.socbb.core.dao.system.DictDao">
+  <resultMap id="BaseResultMap" type="cn.socbb.core.bean.system.Dict">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="key" jdbcType="VARCHAR" property="key" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="field_name" jdbcType="VARCHAR" property="fieldName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, key, value, table_name, field_name
+  </sql>
+</mapper>

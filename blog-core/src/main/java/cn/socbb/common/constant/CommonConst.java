@@ -1,6 +1,8 @@
 
 package cn.socbb.common.constant;
 
+import java.util.UUID;
+
 /**
  * 程序中公用的常量类
  *
@@ -12,7 +14,7 @@ public class CommonConst {
     /**
      * 安全密码(UUID生成)，作为盐值用于用户密码的加密
      */
-    public static final String AES_SECURITY_KEY = "929123f8f17944e8b0a531045453e1f1";
+    public static final String AES_SECURITY_KEY = "0350141dcd5a471d997ebfcbd6cab3b4";
 
     /**
      * 程序默认的错误状态码

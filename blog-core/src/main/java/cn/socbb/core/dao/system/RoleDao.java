@@ -13,4 +13,6 @@ import java.util.List;
 @Mapper
 public interface RoleDao extends MyMapper<Role> {
 
+    List<Role> findByUserId(Long userId);
+
 }

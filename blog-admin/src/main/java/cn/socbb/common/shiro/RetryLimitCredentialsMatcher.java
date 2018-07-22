@@ -1,7 +1,5 @@
-
 package cn.socbb.common.shiro;
 
-import cn.socbb.common.constant.CommonConst;
 import cn.socbb.common.constant.SessionConst;
 import cn.socbb.core.bean.system.User;
 import cn.socbb.core.service.system.UserService;
@@ -19,9 +17,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * Shiro-密码输入错误的状态下重试次数的匹配管理
  *
-
- * @date 2018/4/24 14:37
- * @since 1.0
  */
 public class RetryLimitCredentialsMatcher extends CredentialsMatcher {
 
@@ -40,7 +35,7 @@ public class RetryLimitCredentialsMatcher extends CredentialsMatcher {
 
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        String userId = (String) info.getPrincipals().getPrimaryPrincipal();
+        Long userId = (Long) info.getPrincipals().getPrimaryPrincipal();
         User user = userService.findById(userId);
         String username = user.getUsername();
         // 访问一次，计数一次

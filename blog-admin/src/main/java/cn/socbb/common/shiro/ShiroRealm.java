@@ -1,6 +1,8 @@
 package cn.socbb.common.shiro;
 
 import cn.socbb.common.enums.UserStatusEnum;
+import cn.socbb.common.utils.MD5Utils;
+import cn.socbb.common.utils.PasswordUtils;
 import cn.socbb.common.utils.SessionUtil;
 import cn.socbb.core.bean.system.Menu;
 import cn.socbb.core.bean.system.Role;
@@ -44,9 +46,19 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
+        String password = new String((char[]) token.getCredentials());
         User user = userService.findByUsername(username);
         if (user == null) {
             throw new UnknownAccountException("账号不存在！");
+        }
+        String encrypt = null;
+        try {
+            encrypt = PasswordUtils.encrypt(password, username);
+        } catch (Exception e) {
+            throw new IncorrectCredentialsException("登录失败！");
+        }
+        if (!encrypt.equals(user.getPassword())) {
+            throw new IncorrectCredentialsException("密码错误！");
         }
         if (user.getStatus() != null && UserStatusEnum.DISABLE.getCode().equals(user.getStatus())) {
             throw new LockedAccountException("帐号已被锁定，禁止登录！");

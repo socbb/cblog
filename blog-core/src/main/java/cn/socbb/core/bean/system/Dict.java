@@ -2,6 +2,7 @@ package cn.socbb.core.bean.system;
 
 import lombok.Data;
 
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,8 +12,9 @@ import java.util.Date;
 @Data
 public class Dict implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2331480639188193014L;
 
+    @Id
     private Long id;
 
     private String key;

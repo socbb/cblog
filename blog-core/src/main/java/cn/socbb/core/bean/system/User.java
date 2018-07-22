@@ -1,7 +1,10 @@
 package cn.socbb.core.bean.system;
 
+import cn.socbb.common.enums.UserStatusEnum;
+import cn.socbb.common.utils.SnowflakeUtils;
 import lombok.Data;
 
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,8 +14,8 @@ import java.util.Date;
 @Data
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -3323491027712255843L;
+    @Id
     private Long id;
 
     private String username;
@@ -50,5 +53,24 @@ public class User implements Serializable {
 
     public User(Long id) {
         this.id = id;
+    }
+
+    public void applyDefaultValue(){
+        Date date = new Date();
+        if (getCreateTime() == null) {
+            setCreateTime(date);
+        }
+        if (getUpdateTime() == null) {
+            setUpdateTime(date);
+        }
+        if (getStatus() == null) {
+            setStatus(UserStatusEnum.NORMAL.getCode());
+        }
+        if (getLoginCount() == null) {
+            setLoginCount(0);
+        }
+        if (getId() == null) {
+            setId(SnowflakeUtils.id());
+        }
     }
 }

@@ -8,8 +8,10 @@ import cn.socbb.core.service.system.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by cbb on 2018/7/15.
@@ -21,13 +23,25 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public User findById(String id) {
+    public User findById(Long id) {
         return userDao.selectByPrimaryKey(id);
     }
 
     @Override
     public User findByUsername(String username) {
-        return userDao.selectOne(new User(username));
+        User user = new User(username);
+        user = userDao.selectOne(user);
+        if (user == null) {
+            user = new User();
+            user.setEmail(username);
+            user = userDao.selectOne(user);
+        }
+        if (user == null) {
+            user = new User();
+            user.setMobile(username);
+            user = userDao.selectOne(user);
+        }
+        return user;
     }
 
 
@@ -47,6 +61,26 @@ public class UserServiceImpl implements UserService {
             user.setPassword(null);
             return this.update(user);
         }
+        return false;
+    }
+
+    @Override
+    @Transactional
+    public User insert(User user) {
+        Assert.notNull(user, "User不可为空！");
+        user.applyDefaultValue();
+        userDao.insertSelective(user);
+        return user;
+    }
+
+    @Override
+    public List<User> findByRoleId(Long roleId) {
+        return userDao.findByRoleId(roleId);
+    }
+
+    @Override
+    @Transactional
+    public boolean updatePwd(User user) {
         return false;
     }
 }

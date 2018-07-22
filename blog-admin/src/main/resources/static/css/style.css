@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+.form-control.error {
+    border: 1px solid #cc5965;
+}

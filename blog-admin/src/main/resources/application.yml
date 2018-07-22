@@ -36,6 +36,7 @@ spring:
             template_update_delay: 0
             default_encoding: UTF-8
             classic_compatible: true
+        request-context-attribute: request
     # HTTP ENCODING
     servlet:
         multipart:
@@ -63,9 +64,8 @@ spring:
         store-type: redis
     banner:
         charset: UTF-8
-    devtools:
-        restart:
-          additional-paths: blog-admin/src/main/resources/templates/,blog-admin/src/main/resources/static/
+    mvc:
+      static-path-pattern: /static/**
 # MyBatis
 mybatis:
     type-aliases-package: cn.socbb.core.bean

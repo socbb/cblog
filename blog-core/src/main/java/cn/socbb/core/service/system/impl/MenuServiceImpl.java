@@ -5,7 +5,9 @@ import cn.socbb.core.dao.system.MenuDao;
 import cn.socbb.core.service.system.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +21,11 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Menu> findByUserId(Long userId) {
-        return null;
+        return menuDao.findByUserId(userId);
+    }
+
+    @Override
+    public List<Menu> findUrlAndPerms() {
+        return menuDao.findUrlAndPerms();
     }
 }

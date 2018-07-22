@@ -19,6 +19,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> findRolesByUserId(Long userId) {
-        return null;
+        return roleDao.findByUserId(userId);
     }
 }
