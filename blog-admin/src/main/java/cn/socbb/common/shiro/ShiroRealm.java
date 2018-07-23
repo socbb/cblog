@@ -65,7 +65,12 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // principal参数使用用户Id，方便动态刷新用户权限
-        return new SimpleAuthenticationInfo(user.getId(),user.getPassword(),ByteSource.Util.bytes(username),getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getId(),user.getPassword(),ByteSource.Util.bytes(username),getName());
+
+        // 这里可以设置用户session
+        //Session session = SecurityUtils.getSubject().getSession();
+        //session.setAttribute("USER_SESSION", user);
+        return authenticationInfo;
     }
 
     @Override
