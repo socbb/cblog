@@ -60,6 +60,7 @@ public class ShiroService {
         for (Menu menu : menuList) {
             if (!StringUtils.isEmpty(menu.getUrl()) && !StringUtils.isEmpty(menu.getPerms())) {
                 String permission = "perms[" + menu.getPerms() + "]";
+                // 不用注解也可以通过 API 方式加载权限规则
                 filterChainDefinitionMap.put(menu.getUrl(), permission);
             }
         }
