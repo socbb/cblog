@@ -16,32 +16,32 @@ public class RenderController {
         return "index";
     }
 
-    @RequiresPermissions("system:menu:list")
-    @GetMapping("/system/menu/list")
+    @RequiresPermissions("menus")
+    @GetMapping("menus")
     public String menu(){
         return "system/menu/list";
     }
 
-    @RequiresPermissions("system:role:list")
-    @GetMapping("/system/role/list")
+    @RequiresPermissions("roles")
+    @GetMapping("roles")
     public String role(){
         return "system/role/list";
     }
 
-    @RequiresPermissions("system:user:list")
-    @GetMapping("/system/user/list")
+    @RequiresPermissions("users")
+    @GetMapping("users")
     public String user(){
         return "system/user/list";
     }
 
-    @RequiresPermissions("system:dict:list")
-    @GetMapping("/system/dict/list")
+    @RequiresPermissions("dicts")
+    @GetMapping("dicts")
     public String dict(){
         return "system/dict/list";
     }
 
-    @RequiresPermissions("system:config:list")
-    @GetMapping("/system/config/list")
+    @RequiresPermissions("configs")
+    @GetMapping("config")
     public String config(){
         return "system/config/list";
     }

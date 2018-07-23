@@ -83,4 +83,9 @@ public class UserServiceImpl implements UserService {
     public boolean updatePwd(User user) {
         return false;
     }
+
+    @Override
+    public List<User> findByUser(User user) {
+        return userDao.select(user);
+    }
 }

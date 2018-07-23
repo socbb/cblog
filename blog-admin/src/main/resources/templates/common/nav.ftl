@@ -39,9 +39,9 @@
             <li>
                 <a href="javascript:;"><i class="fa fa-sitemap"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="/system/user/list">用户管理</a></li>
-                    <li><a href="/system/role/list">角色管理</a></li>
-                    <li><a href="/system/menu/list">菜单管理</a></li>
+                    <li><a href="/users">用户管理</a></li>
+                    <li><a href="/roles">角色管理</a></li>
+                    <li><a href="/menus">菜单管理</a></li>
                 </ul>
             </li>
         </ul>

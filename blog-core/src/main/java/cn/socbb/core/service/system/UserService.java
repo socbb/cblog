@@ -19,4 +19,6 @@ public interface UserService {
     User insert(User user);
 
     List<User> findByRoleId(Long roleId);
+
+    List<User> findByUser(User user);
 }

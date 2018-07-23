@@ -19,7 +19,8 @@ public class SessionUtil {
      * @return User
      */
     public static User getUser() {
-        return (User) RequestHolder.getSession(SessionConst.USER_SESSION_KEY);
+        Object session = RequestHolder.getSession(SessionConst.USER_SESSION_KEY);
+        return (User) session;
     }
 
     /**
