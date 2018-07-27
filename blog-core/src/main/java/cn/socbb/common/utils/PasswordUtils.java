@@ -25,4 +25,9 @@ public class PasswordUtils {
     public static String decrypt(String encryptPassword, String salt) throws Exception {
         return AesUtils.decrypt(MD5Utils.MD5(salt + CommonConst.AES_SECURITY_KEY), encryptPassword);
     }
+
+    public static void main(String[] args) throws Exception {
+        String socbb = encrypt("123456", "socbb");
+        System.out.println(socbb);
+    }
 }

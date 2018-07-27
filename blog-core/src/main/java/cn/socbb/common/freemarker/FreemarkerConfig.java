@@ -1,5 +1,7 @@
 package cn.socbb.common.freemarker;
 
+import cn.socbb.core.directive.SystemDirective;
+import com.jagregory.shiro.freemarker.ShiroTags;
 import freemarker.template.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,9 +18,13 @@ public class FreemarkerConfig {
     @Autowired
     protected Configuration configuration;
 
+    @Autowired
+    private SystemDirective systemDirective;
+
     @PostConstruct
     public void  setSharedVariable() {
         resolver.setRequestContextAttribute("request");
-//        configuration.setSharedVariable("articlePage", articlePageDirective);
+        configuration.setSharedVariable("shiro", new ShiroTags());
+        configuration.setSharedVariable("system", systemDirective);
     }
 }

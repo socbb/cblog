@@ -47,7 +47,7 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
         String password = new String((char[]) token.getCredentials());
-        User user = userService.findByUsername(username);
+        User user = userService.findByUsernameOrEmailOrMobile(username);
         if (user == null) {
             throw new UnknownAccountException("账号不存在！");
         }

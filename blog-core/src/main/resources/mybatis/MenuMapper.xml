@@ -3,49 +3,61 @@
 <mapper namespace="cn.socbb.core.dao.system.MenuDao">
   <resultMap id="BaseResultMap" type="cn.socbb.core.bean.system.Menu">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="parentId" jdbcType="VARCHAR" property="parent_id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="perms" jdbcType="VARCHAR" property="perms" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="order" jdbcType="INTEGER" property="order" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
-    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
+    <result column="root" jdbcType="INTEGER" property="root" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, parentId, name, url, perms, icon, type, order, createTime, updateTime
+    id, parent_id, name, url, perms, icon, type, seq, create_time, update_time,level
   </sql>
   
   <select id="findByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
       m.id,
       m.name,
+      m.parent_id,
       m.url,
       m.perms,
       m.icon,
       m.type,
-      m.order
+      m.seq,
+      m.root
     from menu m
     left join menu_role smr on smr.menu = m.id
     where smr.role_id = #{roleId}
-    order by m.order
+    order by m.seq,m.create_time asc
   </select>
 
-  <select id="findByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="findByUserId" parameterType="java.util.Map" resultMap="BaseResultMap">
     select
       m.id,
+      m.parent_id,
       m.name,
       m.url,
       m.perms,
       m.icon,
       m.type,
-      m.order
+      m.seq,
+      m.root
     from menu m
     left join role_menu smr on smr.menu_id = m.id
     left join user_role sur on sur.role_id = smr.role_id
-    where sur.user_id = #{userId}
-    order by m.order
+    <where>
+      <if test="userId != null">
+        and sur.user_id = #{userId}
+      </if>
+      <if test="type != null">
+        and m.type = #{type}
+      </if>
+    </where>
+    order by m.seq,m.create_time asc
   </select>
 
   <select id="findUrlAndPerms" resultMap="BaseResultMap">
@@ -57,6 +69,6 @@
         WHERE
             url IS NOT NULL
         ORDER BY
-            `order` ASC
+            seq ASC
     </select>
 </mapper>

@@ -101,7 +101,7 @@ public class LoginController {
         }
         try {
             user.setPassword(PasswordUtils.encrypt(user.getPassword(), user.getUsername()));
-            userService.insert(user);
+            userService.save(user);
             return Response.success("成功");
         } catch (Exception e) {
             e.printStackTrace();

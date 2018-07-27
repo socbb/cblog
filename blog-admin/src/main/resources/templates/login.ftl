@@ -37,7 +37,7 @@
 <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/localization/messages_zh.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-growl/1.0.6/bootstrap-growl.min.js"></script>
-<script src="/static/js/Utils.js"></script>
+<script src="/static/js/utils.js"></script>
 <script type="text/javascript">
     $(function(){
         $("#form").validate();
@@ -53,11 +53,11 @@
         if (!$("#form").valid()) {
             return;
         }
-        $.post('/login', Utils.getParam($("#form")), function(res){
+        $.post('/login', $("#form").param(), function(res){
             if (res.code === 200) {
                 window.location.href = '/';
             } else {
-                $.growl(res.msg);
+                $.tip.error(res.msg);
             }
         }, 'json');
     }

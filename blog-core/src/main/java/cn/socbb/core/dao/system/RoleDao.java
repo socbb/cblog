@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cbb on 2018/7/15.
@@ -13,6 +14,6 @@ import java.util.List;
 @Mapper
 public interface RoleDao extends MyMapper<Role> {
 
-    List<Role> findByUserId(Long userId);
+    List<Role> findByUserId(Map<String, Object> param);
 
 }

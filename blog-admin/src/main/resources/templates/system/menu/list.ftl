@@ -1,5 +1,7 @@
-<#include "/common/macro.ftl">
+<#assign menu = "system_menu">
+<#include '/common/macro.ftl'>
 <@layout>
+<link href="https://cdn.bootcss.com/jquery-treegrid/0.2.0/css/jquery.treegrid.min.css" rel="stylesheet">
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
         <h2></h2>
@@ -15,7 +17,6 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>用户列表</h5>
-
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -35,34 +36,83 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table id="table" data-classes="table table-hover" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"></table>
+                    <div class="table-responsive">
+                        <div id="toolbar">
+                            <div class="btn-group">
+                            <@shiro.hasPermission name="menu:add">
+                                <button class="btn btn-sm btn-primary" onclick="$.operate.form('/menu/form')">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </button>
+                            </@shiro.hasPermission>
+                            <@shiro.hasPermission name="menu:delete">
+                            <button class="btn btn-sm btn-danger" onclick="$.operate.delete('/menu/delete')">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button>
+                            </@shiro.hasPermission>
+                            </div>
+                        </div>
+                        <table id="table" data-classes="table table-hover" data-mobile-responsive="true"></table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <#include "/common/footer.ftl">
+<script src="https://cdn.bootcss.com/bootstrap-table/1.12.0/extensions/treegrid/bootstrap-table-treegrid.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-treegrid/0.2.0/js/jquery.treegrid.min.js"></script>
 <script type="text/javascript">
-    $('#table').bootstrapTable({
-        columns: [{
-            field: 'id',
-            title: 'Item ID'
-        }, {
-            field: 'name',
-            title: 'Item Name'
-        }, {
-            field: 'price',
-            title: 'Item Price'
-        }],
-        data: [{
-            id: 1,
-            name: 'Item 1',
-            price: '$1'
-        }, {
-            id: 2,
-            name: 'Item 2',
-            price: '$2'
-        }]
-    });
+    var operateFormatter = function(code, row, index) {
+        return "<@shiro.hasPermission name='menu:edit'>" + "<a title='修改' onclick=\"$.operate.form('/menu/form?id="+row.id+"')\" class=\"btn btn-xs btn-success\"><i class=\"fa fa-edit\"></i>编辑</a>" + "</@shiro.hasPermission>";
+    }
+
+    $(function () {
+        var option = {
+            url: "/menu/list",
+            treeShowField: 'name',
+            parentIdField: 'parentId',
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'name',
+                title: '名称'
+            }, {
+                field: "type",
+                title: '类型',
+                formatter: function (code, row, index) {
+                    if (code == 1) {
+                        return "<a class=\"btn btn-xs btn-primary\" href=\"javascript:;\">菜单</a>";
+                    } else {
+                        return "<a class=\"btn btn-xs btn-warning\" href=\"javascript:;\">按钮</a>";
+                    }
+                }
+            },{
+                field: 'url',
+                title: '路径'
+            }, {
+                field: 'perms',
+                title: '权限标识'
+            },{
+                field: 'icon',
+                title: '图标'
+            }, {
+                field: 'seq',
+                title: '序号'
+            },{
+                field: 'operate',
+                title: '操作',
+                formatter: operateFormatter
+            }],
+            onLoadSuccess: function(data) {
+                $("#table").treegrid({
+                    treeColumn: 1,
+                    onChange: function() {
+                        $("#table").bootstrapTable('resetWidth');
+                    }
+                });
+            }
+        };
+        $.table.init(option);
+    })
 </script>
 </@layout>

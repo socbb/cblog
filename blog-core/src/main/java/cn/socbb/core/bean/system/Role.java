@@ -15,11 +15,13 @@ public class Role implements Serializable {
     private static final long serialVersionUID = -253077245225771973L;
 
     @Id
-    private String id;
+    private Long id;
 
     private String name;
 
     private String remark;
+
+    private Integer status;
 
     private Date createTime;
 

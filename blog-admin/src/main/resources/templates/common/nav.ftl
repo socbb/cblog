@@ -20,30 +20,24 @@
                     IN+
                 </div>
             </li>
-            <li>
-                <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">首页</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li>
-                        <a href="javascript:;">Third Level <span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level">
-                            <li><a href="index.html#">Third Level Item</a></li>
-                            <li><a href="index.html#">Third Level Item</a></li>
-                            <li><a href="index.html#">Third Level Item</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="index.html#">Second Level Item</a></li>
-                    <li><a href="index.html#">Second Level Item</a></li>
-                    <li><a href="index.html#">Second Level Item</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;"><i class="fa fa-sitemap"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li><a href="/users">用户管理</a></li>
-                    <li><a href="/roles">角色管理</a></li>
-                    <li><a href="/menus">菜单管理</a></li>
-                </ul>
-            </li>
+            <@system method="menus_home" userId="${user.id?c}">
+                <#if menus?? && menus?size gt 0>
+                    <#list menus as item>
+                        <li>
+                            <a href="<#if item.url?? && item.url!=''>${item.url}<#else>javascript:;</#if>"><i class="fa fa-sitemap"></i> <span class="nav-label">${item.name!}</span><span class="fa arrow"></span></a>
+                            <#if item.children?? && item.children?size gt 0>
+                                <ul class="nav nav-second-level collapse">
+                                    <#list item.children as child>
+                                    <li>
+                                        <a href="<#if child.url?? && child.url!=''>${child.url}<#else>javascript:;</#if>">${child.name!}</a>
+                                    </li>
+                                    </#list>
+                                </ul>
+                            </#if>
+                        </li>
+                    </#list>
+                </#if>
+            </@system>
         </ul>
     </div>
 </nav>

@@ -161,7 +161,7 @@ public class SnowflakeUtils {
     public static void main(String[] args) {
         SnowflakeUtils snowflakeUtils = new SnowflakeUtils(0, 0);
         Set<Long> set = new HashSet<>();
-        for (int i = 1; i <= 100000; i++) {
+        for (int i = 1; i <= 10000000; i++) {
             long id = snowflakeUtils.nextId();
             System.out.println(id + " | " + i);
             if (CollectionUtils.isNotEmpty(set) && set.contains(id)) {

@@ -5,7 +5,9 @@ import cn.socbb.common.support.Response;
 import cn.socbb.common.utils.PasswordUtils;
 import cn.socbb.common.utils.ResultUtils;
 import cn.socbb.common.utils.StringUtils;
+import cn.socbb.core.bean.system.Menu;
 import cn.socbb.core.bean.system.User;
+import cn.socbb.core.service.system.MenuService;
 import cn.socbb.core.service.system.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -22,65 +24,54 @@ import java.util.List;
  * Created by cbb on 2018/7/23.
  */
 @RestController
-@RequestMapping("/user")
-public class RestUserController {
+@RequestMapping("/menu")
+public class RestMenuController {
 
     @Autowired
-    private UserService userService;
+    private MenuService menuService;
 
-    @RequiresPermissions("users")
+    @RequiresPermissions("menus")
     @PostMapping("/list")
-    public PageResult list(User user){
-        PageHelper.startPage(1, 10);
-        List<User> list = userService.findByUser(user);
-        PageInfo<User> pageInfo = new PageInfo<>(list);
+    public PageResult list(Menu menu){
+        List<Menu> list = menuService.findByMenu(menu);
+        PageInfo<Menu> pageInfo = new PageInfo<>(list);
         return ResultUtils.tablePage(pageInfo);
     }
 
     @GetMapping("/get/{id}")
     public Response get(@PathVariable Long id) {
-        return Response.success(userService.findById(id));
+        return Response.success(menuService.findById(id));
     }
 
-    @RequiresPermissions(value = {"user:add", "user:edit"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"menu:add", "menu:edit"}, logical = Logical.OR)
     @PostMapping(value = "/save")
-    public Response save(User user, String roleId) {
-        long[] roleIds = null;
-        if (StringUtils.isNotBlank(roleId)) {
-            String[] roleIds_ = roleId.split(",");
-            roleIds = Arrays.stream(roleIds_).mapToLong(Long::valueOf).toArray();
-        }
-        if (user.getId() == null) {
-            User u = userService.findByUsername(user.getUsername());
-            if (u != null) {
-                return Response.error("该用户名["+user.getUsername()+"]已存在！");
-            }
+    public Response save(Menu menu) {
+        if (menu.getId() == null) {
             try {
-                user.setPassword(PasswordUtils.encrypt(user.getPassword(), user.getUsername()));
-                userService.save(user, roleIds);
-                return Response.success("成功");
+                menuService.save(menu);
+                return Response.success();
             } catch (Exception e) {
                 e.printStackTrace();
-                return Response.error("error");
+                return Response.error("保存失败！");
             }
         } else {
             try {
-                userService.update(user, roleIds);
+                menuService.update(menu);
             } catch (Exception e) {
                 e.printStackTrace();
-                return Response.error("用户修改失败！");
+                return Response.error("保存失败！");
             }
             return Response.success();
         }
     }
 
-    @RequiresPermissions("user:delete")
+    @RequiresPermissions("menu:delete")
     @PostMapping(value = "/delete")
     public Response delete(@RequestParam("ids[]") Long[] ids) {
         if (ArrayUtils.isEmpty(ids)) {
             return Response.error("请至少选择一条记录");
         }
-        userService.deleteWhitRoleById(ids);
+        menuService.delete(ids);
         return Response.success("成功删除 [" + ids.length + "] 条记录");
     }
 }

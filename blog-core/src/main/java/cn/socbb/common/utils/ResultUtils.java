@@ -22,4 +22,5 @@ public class ResultUtils {
         return tablePage(info.getTotal(), info.getList());
     }
 
+
 }

@@ -16,8 +16,8 @@ public class RoleMenu implements Serializable {
     @Id
     private Long id;
 
-    private String roleId;
+    private Long roleId;
 
-    private String menuId;
+    private Long menuId;
 
 }
