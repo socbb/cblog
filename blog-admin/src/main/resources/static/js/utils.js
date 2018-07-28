@@ -164,13 +164,13 @@ $.extend(String.prototype, {
                 });
             },
             info: function(msg) {
-                $.growl.msg(msg, 'info')
+                $.tip.msg(msg, 'info')
             },
             warn: function(msg) {
-                $.growl.msg(msg, 'danger')
+                $.tip.msg(msg, 'danger')
             },
             success: function(msg) {
-                $.growl.msg(msg, 'success')
+                $.tip.msg(msg, 'success')
             }
         },
         /**

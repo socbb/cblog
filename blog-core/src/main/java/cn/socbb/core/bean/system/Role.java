@@ -1,5 +1,8 @@
 package cn.socbb.core.bean.system;
 
+import cn.socbb.common.enums.RoleStatusEnum;
+import cn.socbb.common.enums.UserStatusEnum;
+import cn.socbb.common.utils.SnowflakeUtils;
 import lombok.Data;
 
 import javax.persistence.Id;
@@ -26,4 +29,20 @@ public class Role implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    public void applyDefaultValue(){
+        Date date = new Date();
+        if (getCreateTime() == null) {
+            setCreateTime(date);
+        }
+        if (getUpdateTime() == null) {
+            setUpdateTime(date);
+        }
+        if (getStatus() == null) {
+            setStatus(RoleStatusEnum.NORMAL.getCode());
+        }
+        if (getId() == null) {
+            setId(SnowflakeUtils.id());
+        }
+    }
 }

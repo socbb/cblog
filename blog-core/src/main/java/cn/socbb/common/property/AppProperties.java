@@ -9,10 +9,8 @@ import org.springframework.stereotype.Component;
 @Data
 public class AppProperties {
 
-    public Boolean enableKaptcha;
-
-    public boolean getEnableKaptcha() {
-        return null == enableKaptcha ? false : enableKaptcha;
-    }
-
+    /**
+     * 超级管理员用户名
+     */
+    public Long rootId;
 }

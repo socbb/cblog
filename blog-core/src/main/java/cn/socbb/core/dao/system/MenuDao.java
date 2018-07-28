@@ -14,9 +14,11 @@ import java.util.Map;
 @Mapper
 public interface MenuDao extends MyMapper<Menu> {
 
-    public List<Menu> findByRoleId(Long roleId);
+    List<Menu> findByRoleId(Long roleId);
 
-    public List<Menu> findByUserId(Map<String, Object> param);
+    List<Menu> findByUserId(Map<String, Object> param);
 
-    public List<Menu> findUrlAndPerms();
+    List<Menu> findUrlAndPerms();
+
+    List<Menu> findMenusWithSelected(Long roleId);
 }

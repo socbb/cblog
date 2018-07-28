@@ -1,4 +1,4 @@
-<#assign menu = "system_menu">
+<#assign nav_active = "系统管理_菜单管理">
 <#include '/common/macro.ftl'>
 <@layout>
 <link href="https://cdn.bootcss.com/jquery-treegrid/0.2.0/css/jquery.treegrid.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>用户列表</h5>
+                    <h5>菜单列表</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -71,6 +71,11 @@
             url: "/menu/list",
             treeShowField: 'name',
             parentIdField: 'parentId',
+            pagination: true,
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 100,                       //每页的记录行数（*）
+            pageList: [],
             columns: [{
                 checkbox: true
             }, {

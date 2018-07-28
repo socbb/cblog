@@ -23,12 +23,16 @@
             <@system method="menus_home" userId="${user.id?c}">
                 <#if menus?? && menus?size gt 0>
                     <#list menus as item>
-                        <li>
-                            <a href="<#if item.url?? && item.url!=''>${item.url}<#else>javascript:;</#if>"><i class="fa fa-sitemap"></i> <span class="nav-label">${item.name!}</span><span class="fa arrow"></span></a>
+                        <li <#if nav_active?contains(item.name)>class="active"</#if> >
+                            <a href="<#if item.url?? && item.url!=''>${item.url}<#else>javascript:;</#if>"><i class="fa fa-sitemap"></i> <span class="nav-label">${item.name!}</span>
+                            <#if item.children?? && item.children?size gt 0>
+                                <span class="fa arrow"></span>
+                            </#if>
+                            </a>
                             <#if item.children?? && item.children?size gt 0>
                                 <ul class="nav nav-second-level collapse">
                                     <#list item.children as child>
-                                    <li>
+                                    <li <#if nav_active?contains(child.name)>class="active"</#if>>
                                         <a href="<#if child.url?? && child.url!=''>${child.url}<#else>javascript:;</#if>">${child.name!}</a>
                                     </li>
                                     </#list>

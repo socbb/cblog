@@ -1,3 +1,4 @@
+<#assign nav_active = "首页">
 <#include '/common/macro.ftl'>
 <@layout>
     <div class="row wrapper border-bottom white-bg page-heading">

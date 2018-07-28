@@ -71,4 +71,19 @@
         ORDER BY
             seq ASC
     </select>
+
+  <select id="findMenusWithSelected" parameterType="java.lang.Long" resultType="cn.socbb.core.bean.system.Menu">
+    SELECT
+        re.id,
+        re.`name`,
+        re.parent_id parentId,
+        re.url,
+        re.type,
+        re.icon,
+        (CASE WHEN EXISTS (SELECT 1 FROM role_menu rr WHERE rr.menu_id = re.id AND rr.role_id = #{roleId} ) THEN 'true' ELSE 'false' END ) AS checked
+    FROM
+        menu re
+    ORDER BY
+        re.seq,re.create_time ASC
+  </select>
 </mapper>

@@ -1,8 +1,12 @@
 package cn.socbb.core.bean.system;
 
+import cn.socbb.common.utils.SnowflakeUtils;
 import lombok.Data;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 /**
@@ -20,4 +24,10 @@ public class RoleMenu implements Serializable {
 
     private Long menuId;
 
+    @Transient
+    public void applyDefaultValue() {
+        if (getId() == null) {
+            setId(SnowflakeUtils.id());
+        }
+    }
 }

@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">路径</label>
                         <div class="col-lg-10">
-                            <input type="text" name="url" class="form-control required" value="${bean.url!}">
+                            <input type="text" name="url" class="form-control" value="${bean.url!}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -34,15 +34,15 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">父菜单</label>
                         <div class="col-lg-10">
-                            <select class="form-control m-b <#if !bean??>required</#if>" name="parentId">
+                            <select class="form-control m-b" name="parentId">
                                 <option value=""></option>
                                 <@system method="menus" type=1; menus>
                                 <#if menus?? && menus?size gt 0>
                                     <#list menus as m>
-                                        <option value="${m.id}">${m.name}</option>
+                                        <option value="${m.id?c}">${m.name}</option>
                                         <#if m.children?? && m.children?size gt 0>
                                             <#list m.children as child>
-                                                <option value="${child.id}">|-${child.name}</option>
+                                                <option value="${child.id?c}">|-${child.name}</option>
                                             </#list>
                                         </#if>
                                     </#list>
@@ -62,7 +62,7 @@
                         <div class="col-lg-10">
                             <select class="form-control m-b required" name="type">
                                 <option value="1" <#if bean.type == 1>selected</#if>>菜单</option>
-                                <option value="0" <#if bean.type == 2>selected</#if>>按钮</option>
+                                <option value="2" <#if bean.type == 2>selected</#if>>按钮</option>
                             </select>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
             $.modal.close("#modal-form");
             if (res.code === 200) {
                 $.table.refresh();
-                $.sweet.success("添加成功");
+                $.sweet.success("保存成功");
             } else {
                 $.sweet.warn(res.msg)
             }

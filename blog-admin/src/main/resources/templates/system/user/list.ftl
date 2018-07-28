@@ -1,3 +1,4 @@
+<#assign nav_active = "系统管理_用户管理">
 <#include '/common/macro.ftl'>
 <@layout>
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -58,10 +59,6 @@
 </div>
 <#include "/common/footer.ftl">
 <script type="text/javascript">
-    var operateFormatter = function(code, row, index) {
-        return "<@shiro.hasPermission name='user:edit'>" + "<a title='修改' onclick=\"$.operate.form('/user/form?id="+row.id+"')\" class=\"btn btn-xs btn-success\"><i class=\"fa fa-edit\"></i>编辑</a>" + "</@shiro.hasPermission>";
-    }
-
     $(function () {
         var option = {
             url: "/user/list",
@@ -78,15 +75,27 @@
                 editable: true
             }, {
                 field: 'email',
-                title: '邮箱',
-                editable: true
+                title: '邮箱'
             }, {
-                field: 'qq',
-                title: 'qq',
-                editable: true
+                field: 'mobile',
+                title: '手机'
             }, {
-                field: 'statusEnum',
+                field: 'status',
                 title: '状态',
+                formatter: function (code, row, index) {
+                    if (code == 1) {
+                        return "<a class=\"btn btn-xs btn-primary\" href=\"javascript:;\">正常</a>";
+                    } else {
+                        return "<a class=\"btn btn-xs btn-danger\" href=\"javascript:;\">禁用</a>";
+                    }
+                }
+            }, {
+                field: 'createTime',
+                title: '创建时间',
+                sortTable: true,
+                formatter: function (code) {
+                    return (!code) ? "" : new Date(code).format("yyyy-MM-dd hh:mm:ss")
+                }
             }, {
                 field: 'lastLoginTime',
                 title: '最后登录时间',
@@ -96,13 +105,18 @@
                     return (!code) ? "" : new Date(code).format("yyyy-MM-dd hh:mm:ss")
                 }
             }, {
+                field: 'lastLoginIp',
+                title: '最后登录IP'
+            }, {
                 field: 'loginCount',
                 title: '登录次数',
                 editable: false
             }, {
                 field: 'operate',
                 title: '操作',
-                formatter: operateFormatter
+                formatter: function (code, row, index) {
+                    return "<@shiro.hasPermission name='user:edit'>" + "<a title='修改' onclick=\"$.operate.form('/user/form?id="+row.id+"')\" class=\"btn btn-xs btn-success\"><i class=\"fa fa-edit\"></i>编辑</a>" + "</@shiro.hasPermission>";
+                }
             }]
         }
         $.table.init(option);

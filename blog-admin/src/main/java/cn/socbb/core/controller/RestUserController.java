@@ -1,5 +1,6 @@
 package cn.socbb.core.controller;
 
+import cn.socbb.common.enums.UserTypeEnum;
 import cn.socbb.common.support.PageResult;
 import cn.socbb.common.support.Response;
 import cn.socbb.common.utils.PasswordUtils;
@@ -57,6 +58,7 @@ public class RestUserController {
             }
             try {
                 user.setPassword(PasswordUtils.encrypt(user.getPassword(), user.getUsername()));
+                user.setType(UserTypeEnum.ADMIN.toString());
                 userService.save(user, roleIds);
                 return Response.success("成功");
             } catch (Exception e) {

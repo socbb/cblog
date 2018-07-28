@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">用户名</label>
                         <div class="col-lg-4">
-                            <input type="text" name="username" class="form-control required" value="${bean.username!}">
+                            <input type="text" name="username" class="form-control required" value="${bean.username!}" <#if bean??>disabled</#if> >
                         </div>
                         <label class="col-lg-2 control-label">昵称</label>
                         <div class="col-lg-4">
@@ -53,7 +53,7 @@
                                 <@system method="roles"; roles>
                                 <#if roles?? && roles?size gt 0>
                                     <#list roles as r>
-                                        <option value="${r.id}" <#if roleIds?seq_contains(r.id)>selected</#if>>${r.name}</option>
+                                        <option value="${r.id?c}" <#if roleIds?seq_contains(r.id?c)>selected</#if>>${r.name}</option>
                                     </#list>
                                 </#if>
                                 </@system>
@@ -95,7 +95,7 @@
             $.modal.close("#modal-form");
             if (res.code === 200) {
                 $.table.refresh();
-                $.sweet.success("添加成功");
+                $.sweet.success("保存成功");
             } else {
                 $.sweet.warn(res.msg)
             }

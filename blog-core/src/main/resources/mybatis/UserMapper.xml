@@ -6,6 +6,7 @@
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
@@ -19,7 +20,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         id, username, password, nickname, email, mobile, description, avatar, status, create_time,
-    update_time, last_login_time, last_login_ip, login_count
+    update_time, last_login_time, last_login_ip, login_count,type
     </sql>
     <select id="findByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT

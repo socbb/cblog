@@ -4,6 +4,8 @@ import cn.socbb.common.enums.BooleanEnmu;
 import cn.socbb.common.utils.SnowflakeUtils;
 import lombok.Data;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
@@ -33,6 +35,9 @@ public class Menu implements Serializable {
     private Date updateTime;
     @Transient
     private List<Menu> children = new ArrayList<>();
+
+    @Transient
+    private String checked;
 
     @Transient
     public void applyDefaultValue(){

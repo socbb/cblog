@@ -57,7 +57,7 @@
             if (res.code === 200) {
                 window.location.href = '/';
             } else {
-                $.tip.error(res.msg);
+                $.tip.warn(res.msg);
             }
         }, 'json');
     }

@@ -7,6 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by cbb on 2018/7/26.
@@ -49,7 +50,7 @@ public class TreeUtils {
      * 得到子节点列表
      */
     private static List<Menu> getChildList(List<Menu> menus, Menu menu) {
-        return menus.stream().filter(menu_ -> menu_.getParentId() == menu.getId()).collect(Collectors.toList());
+        return menus.stream().filter(menu_ -> menu_.getParentId() == null ? false : menu_.getParentId().longValue() == menu.getId().longValue()).collect(Collectors.toList());
     }
 
 }

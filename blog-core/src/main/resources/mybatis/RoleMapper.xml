@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="cn.socbb.core.bean.system.Role">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="status" jdbcType="INT" property="status"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createtime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updatetime"/>

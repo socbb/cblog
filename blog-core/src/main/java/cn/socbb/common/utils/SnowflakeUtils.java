@@ -2,6 +2,7 @@ package cn.socbb.common.utils;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -161,7 +162,8 @@ public class SnowflakeUtils {
     public static void main(String[] args) {
         SnowflakeUtils snowflakeUtils = new SnowflakeUtils(0, 0);
         Set<Long> set = new HashSet<>();
-        for (int i = 1; i <= 10000000; i++) {
+        Integer[] integers = {1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13,14,15,16,17,18,19};
+        Arrays.stream(integers).forEach(i -> {
             long id = snowflakeUtils.nextId();
             System.out.println(id + " | " + i);
             if (CollectionUtils.isNotEmpty(set) && set.contains(id)) {
@@ -169,7 +171,7 @@ public class SnowflakeUtils {
                 return;
             }
             set.add(id);
-        }
+        });
     }
 
 }

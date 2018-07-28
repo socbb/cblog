@@ -1,6 +1,7 @@
 package cn.socbb.core.service.system;
 
 import cn.socbb.core.bean.system.Menu;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,8 @@ public interface MenuService {
 
     List<Menu> findByMenuTree(Menu menu);
 
+    List<Menu> findAll();
+
     List<Menu> findByMapWithUserId(Map<String, Object> param);
 
     void save(Menu menu);
@@ -29,4 +32,10 @@ public interface MenuService {
     void update(Menu menu);
 
     void delete(Long... id);
+
+    List<Map<String, Object>> findWithSelected(Long roleId);
+
+    void addRoleMenus(Long roleId, Long[] menuIds);
+
+    void removeByRoleId(Long roleId);
 }

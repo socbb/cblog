@@ -1,7 +1,9 @@
 package cn.socbb.core.bean.system;
 
 import cn.socbb.common.enums.UserStatusEnum;
+import cn.socbb.common.enums.UserTypeEnum;
 import cn.socbb.common.utils.SnowflakeUtils;
+import cn.socbb.common.utils.StringUtils;
 import lombok.Data;
 
 import javax.persistence.Id;
@@ -43,6 +45,8 @@ public class User implements Serializable {
     private String lastLoginIp;
 
     private Integer loginCount;
+
+    private String type;
 
     public User() {
     }

@@ -1,5 +1,6 @@
 package cn.socbb.core.controller;
 
+import cn.socbb.common.shiro.ShiroService;
 import cn.socbb.common.support.PageResult;
 import cn.socbb.common.support.Response;
 import cn.socbb.common.utils.PasswordUtils;
@@ -30,6 +31,9 @@ public class RestMenuController {
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private ShiroService shiroService;
+
     @RequiresPermissions("menus")
     @PostMapping("/list")
     public PageResult list(Menu menu){
@@ -49,6 +53,8 @@ public class RestMenuController {
         if (menu.getId() == null) {
             try {
                 menuService.save(menu);
+                //更新权限
+                shiroService.updatePermission();
                 return Response.success();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,6 +78,8 @@ public class RestMenuController {
             return Response.error("请至少选择一条记录");
         }
         menuService.delete(ids);
+        //更新权限
+        shiroService.updatePermission();
         return Response.success("成功删除 [" + ids.length + "] 条记录");
     }
 }

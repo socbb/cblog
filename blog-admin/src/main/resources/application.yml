@@ -84,3 +84,7 @@ mapper:
   not-empty: false
   identity: MYSQL
 
+
+app:
+  rootId: 1
+

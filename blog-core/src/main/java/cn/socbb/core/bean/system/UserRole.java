@@ -4,6 +4,8 @@ import cn.socbb.common.enums.UserStatusEnum;
 import cn.socbb.common.utils.SnowflakeUtils;
 import lombok.Data;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;

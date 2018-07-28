@@ -4,15 +4,16 @@ import cn.socbb.common.annotation.RedisCache;
 import cn.socbb.common.enums.MenuTypeEnum;
 import cn.socbb.common.utils.TreeUtils;
 import cn.socbb.core.bean.system.Menu;
+import cn.socbb.core.bean.system.RoleMenu;
 import cn.socbb.core.dao.system.MenuDao;
 import cn.socbb.core.service.system.MenuService;
 import cn.socbb.core.service.system.RoleMenuService;
-import org.junit.Test;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import sun.util.resources.cldr.id.CurrencyNames_id;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.*;
 
@@ -71,6 +72,11 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public List<Menu> findAll() {
+        return menuDao.selectAll();
+    }
+
+    @Override
     @RedisCache
     public List<Menu> findByMapWithUserId(Map<String, Object> param) {
         return menuDao.findByUserId(param);
@@ -100,5 +106,66 @@ public class MenuServiceImpl implements MenuService {
             menuDao.deleteByPrimaryKey(_id);
             roleMenuService.deleteByMenuId(_id);
         });
+    }
+
+    /**
+     * 获取权限设置ztree
+     * @param roleId
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> findWithSelected(Long roleId){
+        List<Menu> menuList = menuDao.findMenusWithSelected(roleId);
+        if (CollectionUtils.isEmpty(menuList)) {
+            return null;
+        }
+
+        List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+        menuList.forEach(menu -> {
+            Map<String, Object> map = new HashMap<>(3);
+            map.put("id", menu.getId());
+            map.put("pId", menu.getParentId());
+            map.put("checked", menu.getChecked());
+            map.put("name", menu.getName());
+            mapList.add(map);
+        });
+
+        return mapList;
+    }
+
+    /**
+     * 添加角色资源
+     * @param roleId
+     * @param menuIds
+     */
+    @Override
+    @Transactional
+    public void addRoleMenus(Long roleId, Long[] menuIds) {
+        //删除
+        removeByRoleId(roleId);
+        //添加
+        if (ArrayUtils.isNotEmpty(menuIds)) {
+            Arrays.stream(menuIds).forEach(menuId -> {
+                RoleMenu roleMenu = new RoleMenu();
+                roleMenu.applyDefaultValue();
+                roleMenu.setRoleId(roleId);
+                roleMenu.setMenuId(menuId);
+                roleMenuService.save(roleMenu);
+            });
+        }
+    }
+
+    /**
+     * 通过角色id批量删除
+     * @param roleId
+     */
+    @Override
+    @Transactional
+    public void removeByRoleId(Long roleId) {
+        //删除
+        Example example = new Example(RoleMenu.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("roleId", roleId);
+        roleMenuService.deleteByExample(example);
     }
 }

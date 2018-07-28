@@ -1,6 +1,8 @@
 package cn.socbb.common.shiro;
 
 import cn.socbb.common.enums.UserStatusEnum;
+import cn.socbb.common.enums.UserTypeEnum;
+import cn.socbb.common.property.AppProperties;
 import cn.socbb.common.utils.MD5Utils;
 import cn.socbb.common.utils.PasswordUtils;
 import cn.socbb.common.utils.SessionUtil;
@@ -39,6 +41,9 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private AppProperties appProperties;
 
     /**
      * 提供账户信息返回认证信息（用户的角色信息集合）
@@ -92,7 +97,12 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // 赋予权限
-        List<Menu> menuList = menuService.findByUserId(userId);
+        List<Menu> menuList = null;
+        if ( UserTypeEnum.ROOT.toString().equalsIgnoreCase(user.getType())) {
+            menuList =  menuService.findAll();
+        } else {
+            menuList =  menuService.findByUserId(userId);
+        }
         if (!CollectionUtils.isEmpty(menuList)) {
             Set<String> permissionSet = new HashSet<>();
             for (Menu menu : menuList) {

@@ -65,9 +65,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public boolean update(User user, long[] roleIds) {
         String password = user.getPassword();
+        String username = user.getUsername();
         if (StringUtils.isNotBlank(password)) {
             try {
-                user.setPassword(PasswordUtils.encrypt(password, user.getUsername()));
+                user.setPassword(PasswordUtils.encrypt(password, username));
             } catch (Exception e) {
                 throw new RuntimeException("密码加密错误");
             }
