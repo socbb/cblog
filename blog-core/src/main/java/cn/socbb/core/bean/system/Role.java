@@ -6,6 +6,7 @@ import cn.socbb.common.utils.SnowflakeUtils;
 import lombok.Data;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -29,6 +30,9 @@ public class Role implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    @Transient
+    private Integer checked;
 
     public void applyDefaultValue(){
         Date date = new Date();

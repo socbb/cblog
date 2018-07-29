@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by cbb on 2018/7/16.
@@ -68,5 +65,20 @@ public class RoleServiceImpl implements RoleService {
             roleDao.deleteByPrimaryKey(_id);
             roleMenuService.deleteByRoleId(_id);
         });
+    }
+
+    @Override
+    public List<Map<String, Object>> findRolesWithSelected(Long userId) {
+        List<Role> roles = roleDao.findRolesWithSelected(userId);
+        List<Map<String, Object>> result = new ArrayList<>();
+        roles.forEach(role -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", role.getId());
+            map.put("pid", -1);
+            map.put("name", role.getName());
+            map.put("checked", role.getChecked() != null && role.getChecked() == 1);
+            result.add(map);
+        });
+        return result;
     }
 }

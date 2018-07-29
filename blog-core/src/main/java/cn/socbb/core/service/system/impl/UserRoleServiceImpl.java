@@ -20,6 +20,14 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     @Transactional
+    public UserRole save(UserRole role) {
+        role.applyDefaultValue();
+        int insert = userRoleDao.insert(role);
+        return role;
+    }
+
+    @Override
+    @Transactional
     public void deleteByUserId(Long... id) {
         Arrays.stream(id).forEach(_id -> {
             UserRole userRole = new UserRole();

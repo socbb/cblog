@@ -8,6 +8,7 @@ import cn.socbb.common.utils.ResultUtils;
 import cn.socbb.common.utils.StringUtils;
 import cn.socbb.core.bean.system.User;
 import cn.socbb.core.service.system.UserService;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.ArrayUtils;
@@ -45,12 +46,7 @@ public class RestUserController {
 
     @RequiresPermissions(value = {"user:add", "user:edit"}, logical = Logical.OR)
     @PostMapping(value = "/save")
-    public Response save(User user, String roleId) {
-        long[] roleIds = null;
-        if (StringUtils.isNotBlank(roleId)) {
-            String[] roleIds_ = roleId.split(",");
-            roleIds = Arrays.stream(roleIds_).mapToLong(Long::valueOf).toArray();
-        }
+    public Response save(User user) {
         if (user.getId() == null) {
             User u = userService.findByUsername(user.getUsername());
             if (u != null) {
@@ -59,7 +55,7 @@ public class RestUserController {
             try {
                 user.setPassword(PasswordUtils.encrypt(user.getPassword(), user.getUsername()));
                 user.setType(UserTypeEnum.ADMIN.toString());
-                userService.save(user, roleIds);
+                userService.save(user);
                 return Response.success("成功");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -67,7 +63,7 @@ public class RestUserController {
             }
         } else {
             try {
-                userService.update(user, roleIds);
+                userService.update(user);
             } catch (Exception e) {
                 e.printStackTrace();
                 return Response.error("用户修改失败！");
@@ -84,5 +80,16 @@ public class RestUserController {
         }
         userService.deleteWhitRoleById(ids);
         return Response.success("成功删除 [" + ids.length + "] 条记录");
+    }
+
+    /**
+     * 分配的角色
+     */
+    @RequiresPermissions("user:allotRole")
+    @PostMapping("/allotRole/{userId}")
+    public Response allotRoleSave(@PathVariable Long userId, String roleId){
+        List<Long> roleIds = JSON.parseArray(roleId, Long.TYPE);
+        userService.allotRole(userId, roleIds);
+        return Response.success();
     }
 }

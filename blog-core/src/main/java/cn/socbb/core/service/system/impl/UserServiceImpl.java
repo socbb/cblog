@@ -8,6 +8,7 @@ import cn.socbb.core.bean.system.User;
 import cn.socbb.core.bean.system.UserRole;
 import cn.socbb.core.dao.system.UserDao;
 import cn.socbb.core.dao.system.UserRoleDao;
+import cn.socbb.core.service.system.UserRoleService;
 import cn.socbb.core.service.system.UserService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Autowired
-    private UserRoleDao userRoleDao;
+    private UserRoleService userRoleService;
 
     @Override
     public User findById(Long id) {
@@ -77,11 +79,11 @@ public class UserServiceImpl implements UserService {
 
         // 更新用户角色关系, 先全部删除, 再添加
         if (i > 0 && ArrayUtils.isNotEmpty(roleIds)) {
-            userRoleDao.delete(new UserRole(user.getId()));
+            userRoleService.deleteByUserId(user.getId());
             Arrays.stream(roleIds).forEach(roleId -> {
                 UserRole userRole = new UserRole(user.getId(), roleId);
                 userRole.applyDefaultValue();
-                userRoleDao.insert(userRole);
+                userRoleService.save(userRole);
             });
         }
         return i > 0;
@@ -128,13 +130,6 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(user, "User不可为空！");
         user.applyDefaultValue();
         userDao.insertSelective(user);
-
-        // 添加用户-角色关系
-        Arrays.stream(roleIds).forEach(roleId -> {
-            UserRole userRole = new UserRole(user.getId(), roleId);
-            userRole.applyDefaultValue();
-            userRoleDao.insert(userRole);
-        });
         return user;
     }
 
@@ -166,7 +161,7 @@ public class UserServiceImpl implements UserService {
     public boolean deleteWhitRoleById(Long... id) {
         Arrays.stream(id).forEach(_id -> {
             userDao.deleteByPrimaryKey(_id);
-            userRoleDao.delete(new UserRole(_id));
+            userRoleService.deleteByRoleId(_id);
         });
         return true;
     }
@@ -174,5 +169,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean exist(User user) {
         return CollectionUtils.isNotEmpty(userDao.select(user));
+    }
+
+    /**
+     * 分配角色
+     *
+     * @param userId
+     * @param roleIds
+     */
+    @Override
+    @Transactional
+    public void allotRole(Long userId, List<Long> roleIds) {
+        //删除
+        userRoleService.deleteByUserId(userId);
+        if (CollectionUtils.isNotEmpty(roleIds)) {
+            roleIds.forEach(roleId -> {
+                UserRole userRole = new UserRole(userId, roleId);
+                userRole.applyDefaultValue();
+                userRoleService.save(userRole);
+            });
+        }
     }
 }

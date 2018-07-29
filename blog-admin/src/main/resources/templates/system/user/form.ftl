@@ -47,20 +47,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">所属角色</label>
-                        <div class="col-lg-10">
-                            <select multiple class="form-control m-b required" name="roleId">
-                                <@system method="roles"; roles>
-                                <#if roles?? && roles?size gt 0>
-                                    <#list roles as r>
-                                        <option value="${r.id?c}" <#if roleIds?seq_contains(r.id?c)>selected</#if>>${r.name}</option>
-                                    </#list>
-                                </#if>
-                                </@system>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-lg-2 control-label">头像</label>
                         <div class="col-lg-10">
                             <input type="text" name="avatar" class="form-control" value="${bean.avatar!}">

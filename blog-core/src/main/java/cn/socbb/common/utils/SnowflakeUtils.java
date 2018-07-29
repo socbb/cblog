@@ -84,6 +84,11 @@ public class SnowflakeUtils {
 
     //==============================Constructors=====================================
 
+    private static SnowflakeUtils snowflake = null;
+
+    static {
+        snowflake = new SnowflakeUtils(0, 0);
+    }
     /**
      * 构造函数
      *
@@ -155,23 +160,21 @@ public class SnowflakeUtils {
     }
 
     public static Long id(){
-        SnowflakeUtils snowflakeUtils = new SnowflakeUtils(0, 0);
-        return snowflakeUtils.nextId();
+        return snowflake.nextId();
     }
 
     public static void main(String[] args) {
-        SnowflakeUtils snowflakeUtils = new SnowflakeUtils(0, 0);
         Set<Long> set = new HashSet<>();
-        Integer[] integers = {1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13,14,15,16,17,18,19};
-        Arrays.stream(integers).forEach(i -> {
-            long id = snowflakeUtils.nextId();
+
+        for (int i = 0; i < 10000; i++) {
+            long id = id();
             System.out.println(id + " | " + i);
             if (CollectionUtils.isNotEmpty(set) && set.contains(id)) {
                 System.out.println("有重复的: " + id);
                 return;
             }
             set.add(id);
-        });
+        }
     }
 
 }

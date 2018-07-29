@@ -26,4 +26,13 @@
             and sr.status = #{status}
         </if>
     </select>
+
+    <select id="findRolesWithSelected" parameterType="java.lang.Long" resultType="cn.socbb.core.bean.system.Role">
+    SELECT
+        r.id,
+        r.name,
+        (CASE WHEN (SELECT ur.role_id FROM user_role ur WHERE ur.user_id = #{userId} AND ur.role_id = r.id ) THEN 1 ELSE 0 END ) AS checked
+    FROM
+        role r
+  </select>
 </mapper>

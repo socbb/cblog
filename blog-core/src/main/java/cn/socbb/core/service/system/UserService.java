@@ -33,4 +33,6 @@ public interface UserService {
     boolean deleteWhitRoleById(Long... id);
 
     boolean exist(User user);
+
+    void allotRole(Long userId, List<Long> roleIds);
 }

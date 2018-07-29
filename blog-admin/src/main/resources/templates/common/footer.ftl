@@ -20,6 +20,8 @@
 <script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-growl/1.0.6/bootstrap-growl.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+<script src="https://cdn.bootcss.com/select2/4.0.6-rc.1/js/select2.min.js"></script>
+<script src="https://cdn.bootcss.com/select2/4.0.6-rc.1/js/i18n/zh-CN.js"></script>
 
 <script src="/static/js/utils.js"></script>
 <script src="/static/js/table.js"></script>

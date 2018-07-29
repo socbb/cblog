@@ -4,7 +4,6 @@ import cn.socbb.common.shiro.ShiroService;
 import cn.socbb.common.support.PageResult;
 import cn.socbb.common.support.Response;
 import cn.socbb.common.utils.ResultUtils;
-import cn.socbb.core.bean.system.Menu;
 import cn.socbb.core.bean.system.Role;
 import cn.socbb.core.service.system.MenuService;
 import cn.socbb.core.service.system.RoleService;
@@ -41,6 +40,15 @@ public class RestRoleController {
         List<Role> list = roleService.findByRole(role);
         PageInfo<Role> pageInfo = new PageInfo<>(list);
         return ResultUtils.tablePage(pageInfo);
+    }
+
+    /**
+     * 获取可分配的角色
+     */
+    @RequiresPermissions("user:allotRole")
+    @GetMapping("/allotRole/list/{userId}")
+    public Response allotRoleList(@PathVariable Long userId){
+        return Response.success(roleService.findRolesWithSelected(userId));
     }
 
     @GetMapping("/get/{id}")

@@ -16,4 +16,6 @@ public interface RoleDao extends MyMapper<Role> {
 
     List<Role> findByUserId(Map<String, Object> param);
 
+    List<Role> findRolesWithSelected(Long userId);
+
 }
