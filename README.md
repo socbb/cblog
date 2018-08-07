@@ -1,7 +1,7 @@
 # cblog
 
 #### 项目介绍
-使用 Spring boot + Mybatis 构建最简洁的博客系统
+Spring boot 生态实践学习
 
 #### 软件架构
 软件架构说明
