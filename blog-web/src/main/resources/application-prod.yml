@@ -9,13 +9,13 @@ spring:
         driver-class-name: com.mysql.jdbc.Driver
         url: jdbc:mysql://127.0.0.1:3306/bblog?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
         username: root
-        password: socbb.@
+        password: xxxx
     # Redis数据库索引（默认为0）
     redis:
         database: 1
         host: 127.0.0.1
         port: 6379
-        password: socbb.@
+        password: xxxx
         jedis:
            pool:
               max-active: 8
@@ -35,7 +35,7 @@ spring:
         # 指定SMTP server的用户名.
         username: 987176700@qq.com
         # 指定SMTP server登陆密码:
-        password: Iwaitforyou98@
+        password: xxxx
         # 指定是否在启动时测试邮件服务器连接，默认为false
         test-connection: false
         properties:
