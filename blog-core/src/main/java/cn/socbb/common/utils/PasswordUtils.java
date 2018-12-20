@@ -27,7 +27,7 @@ public class PasswordUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        String socbb = encrypt("socbb.@", "root");
+        String socbb = encrypt("123456", "root");
         System.out.println(socbb);
     }
 }

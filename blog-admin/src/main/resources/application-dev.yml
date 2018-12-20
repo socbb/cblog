@@ -7,9 +7,9 @@ spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://10.10.38.99:3306/cblog?useUnicode=true&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
-        username: zabbix
-        password: zabbix
+        url: jdbc:mysql://127.0.0.1:3306/cblog?useUnicode=true&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
+        username: root
+        password: root
     # Redis数据库索引（默认为0）
     redis:
         database: 2
