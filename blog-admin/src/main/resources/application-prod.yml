@@ -9,7 +9,7 @@ spring:
         driver-class-name: com.mysql.jdbc.Driver
         url: jdbc:mysql://127.0.0.1:3306/bblog?useUnicode=true&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
         username: root
-        password: xxxx
+        password: 000000
     # Redis数据库索引（默认为0）
     redis:
         database: 1
